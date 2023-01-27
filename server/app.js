@@ -17,6 +17,8 @@ app.get('/musicians', async (req, res, next) => {
     // Parse the query params, set default values, and create appropriate
     // offset and limit values if necessary.
     // Your code here
+    const size = req.query.size ? Number(req.query.size) : 5;
+    const page = req.query.page ? Number(req.query.page) : 1;
     
     // Query for all musicians
     // Include attributes for `id`, `firstName`, and `lastName`
@@ -32,6 +34,8 @@ app.get('/musicians', async (req, res, next) => {
         // add limit key-value to query
         // add offset key-value to query
         // Your code here
+        limit: size === 0 || page === 0 ? null : size,
+        offset: size === 0 || page === 0 ? 0 : size * (page - 1)
     });
 
     res.json(musicians)
@@ -43,6 +47,8 @@ app.get('/bands', async (req, res, next) => {
     // Parse the query params, set default values, and create appropriate
     // offset and limit values if necessary.
     // Your code here
+    const size = req.query.size ? Number(req.query.size) : 5
+    const page = req.query.page ? Number(req.query.page) : 1;
     
     // Query for all bands
     // Include attributes for `id` and `name`
@@ -57,7 +63,8 @@ app.get('/bands', async (req, res, next) => {
         }],
         // add limit key-value to query
         // add offset key-value to query
-        // Your code here
+        limit: size === 0 || page === 0 ? null : size,
+        offset: size === 0 || page === 0 ? 0 : size * (page - 1)
     });
 
     res.json(bands)
@@ -109,5 +116,5 @@ app.get('/', (req, res) => {
 });
 
 // Set port and listen for incoming requests - DO NOT MODIFY
-const port = 5000;
+const port = 5005;
 app.listen(port, () => console.log('Server is listening on port', port));
